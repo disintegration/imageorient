@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/color"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -66,6 +67,11 @@ func TestDecodeConfig(t *testing.T) {
 			t.Fatalf("bad decoded format (%q): %s", tf.path, format)
 		}
 	}
+
+	_, _, err := DecodeConfig(strings.NewReader("bad data"))
+	if err == nil {
+		t.Fatalf("expected error on bad data")
+	}
 }
 
 func TestDecode(t *testing.T) {
@@ -104,6 +110,11 @@ func TestDecode(t *testing.T) {
 		if format != "jpeg" {
 			t.Fatalf("bad decoded format (%q): %s", tf.path, format)
 		}
+	}
+
+	_, _, err = Decode(strings.NewReader("bad data"))
+	if err == nil {
+		t.Fatalf("expected error on bad data")
 	}
 }
 
