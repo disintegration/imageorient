@@ -15,6 +15,11 @@ import (
 	"github.com/rwcarlsen/goexif/exif"
 )
 
+// maxBufLen is the maximum size of a buffer that should be enough to read
+// the EXIF metadata. According to the EXIF sepcs, it is located inside the
+// APP1 block that goes right after the start of image (SOI).
+const maxBufLen = 1 << 20
+
 // Decode decodes an image and changes its orientation
 // according to the EXIF orientation tag (if present).
 func Decode(r io.Reader) (image.Image, string, error) {
@@ -49,7 +54,7 @@ func DecodeConfig(r io.Reader) (image.Config, string, error) {
 // and a new io.Reader with the same state as the original reader r.
 func getOrientation(r io.Reader) (int, io.Reader) {
 	buf := new(bytes.Buffer)
-	tr := io.TeeReader(io.LimitReader(r, 4<<20), buf)
+	tr := io.TeeReader(io.LimitReader(r, maxBufLen), buf)
 	orientation := readOrientation(tr)
 	return orientation, io.MultiReader(buf, r)
 }
