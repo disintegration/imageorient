@@ -35,6 +35,10 @@ func Decode(r io.Reader) (image.Image, string, error) {
 
 // DecodeConfig decodes the color model and dimensions of an image
 // with the respect to the EXIF orientation tag (if present).
+//
+// Note that after using imageorient.Decode on the same image,
+// the color model of the decoded image may be different if the
+// orientation-related transformation is needed.
 func DecodeConfig(r io.Reader) (image.Config, string, error) {
 	orientation, r := getOrientation(r)
 
