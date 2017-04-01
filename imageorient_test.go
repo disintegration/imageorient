@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"image/color"
+	_ "image/jpeg"
 	"os"
 	"strings"
 	"testing"
@@ -24,7 +25,7 @@ var testFiles = []struct {
 	{"testdata/orientation_8.jpg", 8},
 }
 
-var (
+const (
 	testWidth  = 50
 	testHeight = 70
 )
