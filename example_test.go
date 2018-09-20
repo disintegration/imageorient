@@ -9,7 +9,7 @@ import (
 )
 
 func ExampleDecode() {
-	// Open the test image. This particular image have the EXIF
+	// Open the test image. This particular image has the EXIF
 	// orientation tag set to 3 (rotated by 180 deg).
 	f, err := os.Open("testdata/orientation_3.jpg")
 	if err != nil {
